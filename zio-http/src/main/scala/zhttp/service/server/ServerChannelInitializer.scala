@@ -40,8 +40,8 @@ final case class ServerChannelInitializer[R](
     if (cfg.keepAlive) pipeline.addLast(HTTP_KEEPALIVE_HANDLER, new HttpServerKeepAliveHandler)
 
     // FlushConsolidationHandler
-    // Always add FlushConsolidationHandler, optimises the flush calls
-    pipeline.addLast(HTTP_SERVER_FLUSH_CONSOLIDATION, new FlushConsolidationHandler)
+    // Add FlushConsolidationHandler, optimises the flush calls
+    if (cfg.consolidateFlush) pipeline.addLast(HTTP_SERVER_FLUSH_CONSOLIDATION, new FlushConsolidationHandler)
 
     // RequestHandler
     // Always add ZIO Http Request Handler
